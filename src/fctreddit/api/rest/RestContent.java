@@ -41,7 +41,7 @@ public interface RestContent {
 	 * was received.
 	 * 
 	 * @param post - The Post to be created, that should contain the userId of the author in the appropriate field.
-	 * @param password - the password of author of the new post
+	 * @param userPassword - the password of the author of the new post
 	 * @return OK and PostID if the post was created;
 	 * NOT FOUND, if the owner of the short does not exist;
 	 * FORBIDDEN, if the password is not correct;
@@ -54,16 +54,16 @@ public interface RestContent {
 	
 	/**
 	 * Retrieves a list with all top-level Posts unique identifiers (i.e., Posts that have no parent Post).
-	 * By default (i.e., when no query parameter is passed) all top-level posts should be returned in the 
+	 * By default, (i.e., when no query parameter is passed) all top-level posts should be returned in the
 	 * order in which they were created. The effects of both optional parameters can be combined to affect
 	 * the answer.
 	 * 
-	 * @param timestamp this is an optional parameter, if it is defined then the returned list
+	 * @param timestamp this is an optional parameter, if it is defined, then the returned list
 	 * should only contain Posts whose creation timestamp is equal or above the provided timestamp.
 	 * @param sortOrder this is an optional parameter, the admissible values are on constants MOST_UP_VOTES
 	 * and MOST_REPLIES, if the first is indicated, posts IDs should be ordered from the Post with more votes
-	 * to the one with less votes. If the second is provided posts IDs should be ordered from the Post with 
-	 * more replies to the one with less replies.
+	 * to the one with fewer votes. If the second is provided, posts IDs should be ordered from the Post with
+	 * more replies to the one with fewer replies.
 	 * @return 	OK and the List of PostIds that match all options in the right order 
 	 * 			
 	 */
@@ -85,7 +85,7 @@ public interface RestContent {
 	
 	/**
 	 * Retrieves a list with all unique identifiers of posts that have the post
-	 * identified by the postId as their ancestor (i.e., the replies to that post),
+	 * identified by the postId as their ancestor (i.e., the replies to that post);
 	 * the order should be the creation order of those posts.
 	 * @return 	OK and the List of PostIds that match all options in the right order 
 	 * 			NOT_FOUND if postId does not match an existing Post	
@@ -102,7 +102,7 @@ public interface RestContent {
 	 * - mediaUrl
 	 * @param postId the post that should be updated
 	 * @param userPassword the password, it is assumed that only the author of the post 
-	 * can updated it, and as such, the password sent in the operation should belong to 
+	 * can update it, and as such, the password sent in the operation should belong to
 	 * that user.
 	 * @param post A post object with the fields to be updated
 	 * @return 	OK the updated post, in case of success.
@@ -132,7 +132,7 @@ public interface RestContent {
 	/**
 	 * Adds an upvote to a given post made by a specific user (might be different from the author
 	 * of the post). The vote must be authenticated by the password of the user adding the upvote. 
-	 * The upvote on a post can be only be made once by an user, and the user must not have a downvote
+	 * The upvote on a post can only be made once by a user, and the user must not have a downvote
 	 * on that post.
 	 * @param postId unique identifier of the post over which the upvote is made
 	 * @param userId unique identifier of the user making the upvote
@@ -164,15 +164,15 @@ public interface RestContent {
 	public void removeUpVotePost(@PathParam(POSTID) String postId, @PathParam(USERID) String userId, @QueryParam(PASSWORD) String userPassword);
 	
 	/**
-	 * Adds an downvote to a given post made by a specific user (might be different from the author
+	 * Adds a downvote to a given post made by a specific user (might be different from the author
 	 * of the post). The vote must be authenticated by the password of the user adding the downvote. 
-	 * The downvote on a post can be only be made once by an user, and the user must not have a upvote
+	 * The downvote on a post can only be made once by a user, and the user must not have an upvote
 	 * on that post.
 	 * @param postId unique identifier of the post over which the downvote is made
 	 * @param userId unique identifier of the user making the downvote
 	 * @param userPassword Password of user making the downvote
 	 * @return 	NO_CONTENT in case of success
-	 * 			NOT_FOUND if the postId does not match an existing post or the user does not exists
+	 * 			NOT_FOUND if the postId does not match an existing post or the user does not exist
 	 * 			FORBIDDEN if the password is not correct
 	 * 			CONFLICT if the user already has made an upvote or downvote on the post
 	 *			BAD_REQUEST otherwise
@@ -188,9 +188,9 @@ public interface RestContent {
 	 * @param userId unique identifier of the user removing the downvote
 	 * @param userPassword Password of user removing the downvote
 	 * @return 	NO_CONTENT in case of success
-	 * 			NOT_FOUND if the postId does not match an existing post or the user does not exists
+	 * 			NOT_FOUND if the postId does not match an existing post or the user does not exist
 	 * 			FORBIDDEN if the password is not correct
-	 * 			CONFLICT if the user had not made an downvote on this post previously
+	 * 			CONFLICT if the user had not made a downvote on this post previously
 	 *			BAD_REQUEST otherwise
 	 */
 	@DELETE
